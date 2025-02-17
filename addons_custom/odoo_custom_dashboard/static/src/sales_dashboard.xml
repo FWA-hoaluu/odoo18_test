@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- <?xml version="1.0" encoding="UTF-8"?> -->
+<templates xml:space="preserve">
+	<t t-name="owl.OwlSalesDashboard" owl="1">
+		<div class="vh-100 overflow-auto bg-muted">
+			<div class="row m-3 ">
+				<div class="">
+					<div class="shadow-sm border m-2 p-4 bg-white">
+						<div class="d-flex align-items-center justify-content-between">
+							<h1 class="text-primary fw-bold">
+								Custom Sales Dashboard
+							</h1>
+							<div class="d-flex align-items-center">
+								<div class="me-2">
+									<label for="from_date" class="form-label">
+										From Date:
+									</label>
+									<input type="date" id="from_date" t-model="state.from_date" t-on-change="onChangeDate" />
+								</div>
+								<div>
+									<label for="to_date" class="form-label">
+										To Date:
+									</label>
+									<input type="date" id="to_date" t-model="state.to_date" t-on-change="onChangeDate" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row mb-5">
+						<div class="d-flex align-items-center justify-content-between">
+							<h3 class="text-primary fw-bold">
+								Monthly Sales
+							</h3>
+						</div>
+						<div class="col m-0 p-0">
+							<div class="shadow-sm border bg-white">
+								<div class="d-flex align-items-center justify-content-between">
+									<canvas t-ref="chart" />
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="d-flex justify-content-center">
+						<div class="col-lg-3 m-0 p-0">
+							<!-- Quotation Div -->
+							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewQuotations">
+								<div class="h1 fw-bold text-dark" style="font-size: 48px">
+									<span t-esc="state.quotations?.value || 0" />
+								</div>
+								<div class="h3 text-muted">
+									<span t-esc="state.quotations?.name || 'Quotations'" />
+								</div>
+								<div class="h3 mt-5">
+									<span t-attf-class="text-#{ state.quotations?.percentage > 0 ? 'success' : 'danger' }">
+										<span t-attf-class="me-1 fa fa-arrow-#{ state.quotations?.percentage > 0 ? 'up' : 'down' }" />
+										<span t-esc="state.quotations?.percentage || 0" />
+										%
+									</span>
+									<span>
+										since last period
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 m-0 p-0">
+							<!-- Orders Div -->
+							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewOrders">
+								<div class="h1 fw-bold text-dark" style="font-size: 48px">
+									<span t-esc="state.orders?.value || 0" />
+								</div>
+								<div class="h3 text-muted">
+									<span t-esc="state.orders?.name || 'Orders'" />
+								</div>
+								<div class="h3 mt-5">
+									<span t-attf-class="text-#{ state.orders?.percentage > 0 ? 'success' : 'danger' }">
+										<span t-attf-class="me-1 fa fa-arrow-#{ state.orders?.percentage > 0 ? 'up' : 'down' }" />
+										<span t-esc="state.orders?.percentage || 0" />
+										%
+									</span>
+									<span>
+										since last period
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 m-0 p-0">
+							<!-- Revenues Div -->
+							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewRevenues">
+								<div class="h1 fw-bold text-dark" style="font-size: 48px">
+									<span t-esc="state.revenues?.value || 0" />
+								</div>
+								<div class="h3 text-muted">
+									<span t-esc="state.revenues?.name || 'Revenues'" />
+								</div>
+								<div class="h3 mt-5">
+									<span t-attf-class="text-#{ state.revenues?.percentage > 0 ? 'success' : 'danger' }">
+										<span t-attf-class="me-1 fa fa-arrow-#{ state.revenues?.percentage > 0 ? 'up' : 'down' }" />
+										<span t-esc="state.revenues?.percentage || 0" />
+										%
+									</span>
+									<span>
+										since last period
+									</span>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-3 m-0 p-0">
+							<!-- Average Div -->
+							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewAverages">
+								<div class="h1 fw-bold text-dark" style="font-size: 48px">
+									<span t-esc="state.averages?.value || 0" />
+								</div>
+								<div class="h3 text-muted">
+									<span t-esc="state.averages?.name || 'Averages'" />
+								</div>
+								<div class="h3 mt-5">
+									<span t-attf-class="text-#{ state.averages?.percentage > 0 ? 'success' : 'danger' }">
+										<span t-attf-class="me-1 fa fa-arrow-#{ state.averages?.percentage > 0 ? 'up' : 'down' }" />
+										<span t-esc="state.averages?.percentage || 0" />
+										%
+									</span>
+									<span>
+										since last period
+									</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</t>
+</templates>
+<!-- gộp 2 component thành 1 -->
