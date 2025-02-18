@@ -26,6 +26,7 @@
 							</div>
 						</div>
 					</div>
+
 					<div class="row">
 						<div class="d-flex align-items-center justify-content-between">
 							<h3 class="text-primary fw-bold">
@@ -33,14 +34,15 @@
 							</h3>
 						</div>
 					</div>
+
 					<div class="d-flex justify-content-center">
 						<div class="col-lg-3 m-0 p-0">
 							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewQuotations">
 								<div class="h1 fw-bold text-dark" style="font-size: 48px">
-									<span t-esc="state.quotations?.value || 0" />
+									<span style="color:#dc3545;" t-esc="state.quotations?.value || 0" />
 								</div>
 								<div class="h3 text-muted">
-									<span t-esc="state.quotations?.name || 'Quotations'" />
+									<span  t-esc="state.quotations?.name || 'Quotations'" />
 								</div>
 								<div class="h3 mt-5">
 									<span t-attf-class="text-#{ state.quotations?.percentage > 0 ? 'success' : 'danger' }">
@@ -57,7 +59,7 @@
 						<div class="col-lg-3 m-0 p-0">
 							<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewOrders">
 								<div class="h1 fw-bold text-dark" style="font-size: 48px">
-									<span t-esc="state.orders?.value || 0" />
+									<span style="color:#CDB4DB;" t-esc="state.orders?.value || 0" />
 								</div>
 								<div class="h3 text-muted">
 									<span t-esc="state.orders?.name || 'Orders'" />

@@ -18,7 +18,7 @@ export class OwlSalesDashboard extends Component {
         this.state = useState({
             datasets: [],
             labels: [],
-            from_date: this.props.from_date || '01/01/2024',
+            from_date: this.props.from_date || '2024-01-01',
             to_date: this.props.to_date || today,
             quotations: {
                 value: 0,
@@ -82,37 +82,55 @@ export class OwlSalesDashboard extends Component {
 
     // Fetch order data from Odoo based on selected date range
     async loadOrderData() {
-        let domain = [['state', 'in', ['sale', 'done']]];
+        let order_domain = [['state', 'in', ['sale', 'done']]];
+        let quotation_domain = [['state', 'in', ['sent', 'draft']]];
 
         if (this.state.from_date) {
-            domain.push(['date_order', '>=', this.state.from_date]);
+            order_domain.push(['date_order', '>=', this.state.from_date]);
+            quotation_domain.push(['date_order', '>=', this.state.from_date]);
         }
         if (this.state.to_date) {
-            domain.push(['date_order', '<=', this.state.to_date]);
+            order_domain.push(['date_order', '<=', this.state.to_date]);
+            quotation_domain.push(['date_order', '<=', this.state.to_date]);
         }
 
         try {
-            console.log("🔍 Fetching data with domain:", domain);
+            console.log("🔍 Fetching data with domain:", order_domain,quotation_domain );
 
-            const ordersData = await this.orm.searchRead("sale.order", domain, ["date_order", "amount_total"]);
+            const ordersData = await this.orm.searchRead("sale.order", order_domain, ["date_order", "amount_total"]);
+            const quotationsData = await this.orm.searchRead("sale.order", quotation_domain, ["date_order", "amount_total"]);
 
-            if (ordersData.length > 0) {
-                // Format date to a readable format
-                this.state.labels = ordersData.map(order => new Date(order.date_order).toLocaleDateString("en-GB"));
-                this.state.datasets = [{
-                    label: 'Orders Revenue',
-                    data: ordersData.map(order => order.amount_total),
-                    backgroundColor: 'rgb(255, 251, 0)',
-                    borderColor: 'rgb(197, 109, 7)',
-                    borderWidth: 1
-                }];
-            } else {
-                this.state.labels = [];
-                this.state.datasets = [];
-            }
+            const orderLabels = ordersData.map(order => new Date(order.date_order).toLocaleDateString("en-GB"));
+            const quotationLabels = quotationsData.map(quotation => new Date(quotation.date_order).toLocaleDateString("en-GB"));
+            this.state.labels = [...new Set([...orderLabels, ...quotationLabels])]; // Loại bỏ trùng lặp
 
-            // Update the chart after fetching data
-            this.updateChart();
+            // Chuẩn bị datasets cho biểu đồ
+            this.state.datasets = [
+                {
+                    label: 'Orders',
+                    data: this.state.labels.map(date => {
+                        const order = ordersData.find(o => new Date(o.date_order).toLocaleDateString("en-GB") === date);
+                        return order ? order.amount_total : 0;
+                    }),
+                    backgroundColor: '#CDB4DB',
+                    borderColor: '#765378',
+                    borderWidth: 2
+                },
+                {
+                    label: 'Quotations',
+                    data: this.state.labels.map(date => {
+                        const quotation = quotationsData.find(q => new Date(q.date_order).toLocaleDateString("en-GB") === date);
+                        return quotation ? quotation.amount_total : 0;
+                    }),
+                    backgroundColor: '#dc3545',
+                    borderColor: '#FF577F',
+                    borderWidth: 2
+                }
+            ];
+
+        // Cập nhật biểu đồ
+        this.updateChart();
+
 
         } catch (error) {
             console.error("❌ Error fetching data from Odoo:", error);
@@ -132,7 +150,7 @@ export class OwlSalesDashboard extends Component {
     
             if (this.state.datasets.length > 0) {
                 this.chart = new Chart(this.chartRef.el, {
-                    type: this.props.type || 'bar',
+                    type: this.props.type || 'line',
                     data: {
                         labels: this.state.labels,
                         datasets: this.state.datasets
