@@ -60,7 +60,6 @@ export class OwlSalesDashboard extends Component {
                 this.chart.destroy();
             }
         });
-
     }
 
     // Handle changes in date inputs
