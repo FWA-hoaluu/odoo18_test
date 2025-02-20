@@ -53,3 +53,11 @@ h1, h3 {
         flex: 1 0 100%; /* Stack cards vertically on extra small screens */  
     }  
 }  
+
+
+
+.o_menu_sections {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
