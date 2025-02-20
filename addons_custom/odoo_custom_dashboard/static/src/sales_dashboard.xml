@@ -44,20 +44,42 @@
 									</label>
 									<input type="date" id="to_date" class="form-control" t-model="state.to_date" t-on-change="onChangeDate" />
 								</div>
+								<!--
+								<div class="d-flex align-items-start flex-column justify-content-start">
+								<label for="partner" class="form-label">
+								Partner:
+								</label>
+								<select t-on-change="onChangePartner">
+								<option value="" style="display:none;" selected="true" >
+								"select partner"
+								</option>
+								<t t-foreach="state.partners" t-as="partner" t-key="partner.id">
+								<option t-att-value="partner.id">
+								<t t-esc="partner.name" />
+								</option>
+								</t>
+								</select>
+								</div>
+								-->
 								<div class="d-flex align-items-start flex-column justify-content-start">
 									<label for="partner" class="form-label">
 										Partner:
 									</label>
-									<select t-on-change="onChangePartner">
-										<option value="">
+									<select id="partner" t-on-change="onChangePartner" class="form-select">
+										<option value="" disabled="true">
 											-- Select Partner --
 										</option>
+										<option value="all">
+											Xem Tất Cả
+										</option>
+										<!-- Thêm tùy chọn "Xem Tất Cả" -->
 										<t t-foreach="state.partners" t-as="partner" t-key="partner.id">
-											<option t-att-value="partner.id">
+											<option t-att-value="partner.id" t-att-checked="state.selected_partners.includes(partner.id)">
 												<t t-esc="partner.name" />
 											</option>
 										</t>
 									</select>
+									
 								</div>
 							</div>
 						</div>
