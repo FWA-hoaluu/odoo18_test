@@ -457,5 +457,3 @@ OwlSalesDashboard.template = "owl.OwlSalesDashboard";
 // OwlSalesDashboard.template = "owl.OwlSalesDashboard";
 
 registry.category("actions").add("owl.sales_dashboard", OwlSalesDashboard);
-
-
