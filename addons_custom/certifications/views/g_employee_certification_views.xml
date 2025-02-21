@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="g_employee_certification_form_view" model="ir.ui.view">
+            <field name="name">g.employee.certification.form</field>
+            <field name="model">g.employee.certification</field>
+            <field name="arch" type="xml">
+                <form string="Employee Certification">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="description"/>
+                            <field name="employee_id"/>
+                            <field name="attachment_ids" widget="many2many_binary"/>
+                        </group>
+                        <group>
+                            <field name="date_start"/>
+                            <field name="date_end"/>
+                            <field name="cer_type"/>
+                        </group>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+
+            </field>
+        </record>
+
+        <record id="g_employee_certification_tree_view" model="ir.ui.view">
+            <field name="name">g.employee.certification.tree</field>
+            <field name="model">g.employee.certification</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="cer_type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_g_employee_certification" model="ir.actions.act_window">
+            <field name="name">Employee Certification</field>
+            <field name="res_model">g.employee.certification</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+        <menuitem id="menu_g_employee_certification" action="action_g_employee_certification" name="Chứng chỉ" parent="hr.menu_hr_root" sequence="10"/>
+    </data>
+</odoo>
