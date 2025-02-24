@@ -27,13 +27,16 @@ class EmployeeCertification(models.Model):
         for cer in self:
             if cer.date_start and cer.date_end and cer.date_start > cer.date_end:
                 raise ValidationError('Ngày cấp chứng chỉ phải nhỏ hơn ngày hết hạn chứng chỉ')
+
     def get_certification_details(self):
+
         """Trả về thông tin chứng chỉ và nhân viên."""
         return {
             'certification_name': self.name or "Không có tên chứng chỉ",
             'end_date': self.date_end or "Không có ngày hết hạn",
             'employee_name': self.employee_id.name or "Không có tên nhân viên",
         }
+
 
     def send_certificate_expiry_notification(self):
         today = fields.Date.today()
@@ -55,25 +58,20 @@ class EmployeeCertification(models.Model):
                     'email_to': cer.employee_id.work_email,
                 }
                 template_id.send_mail(cer.id, email_values=email_values, force_send=True)
+
+                # Gửi thông điệp tới nhân viên thông qua message_post
+                message_body = _(
+                    "Chúng tôi xin thông báo rằng chứng chỉ '%s' của bạn sẽ hết hạn vào ngày %s."
+                ) % (details['certification_name'], details['end_date'])
+
+                cer.message_post(
+                    body=message_body,
+                    partner_ids=[cer.employee_id.user_id.partner_id.id] if cer.employee_id.user_id else [],
+                    # message_type='notification',
+                )
             else:
                 print(f"Nhân viên {details['employee_name']} không có email làm việc.")
 
-    def get_name_certification(self):
-        today = fields.Date.today()
-        deadline = today + timedelta(days=30)
 
-        # Lọc chứng chỉ hết hạn
-        expired_certs = self.search([('date_end', '<=', deadline)])
-        cer_name = self.name or "Không có tên chứng chỉ"
-        print(f"get_name_certification: {cer_name}")
-        return cer_name
 
-    def get_date_end_certification(self):
-        cer_date_end = self.date_end or "Không có ngày hết hạn"
-        print(f"get_date_end_certification: {cer_date_end}")
-        return cer_date_end
 
-    def get_employee_name(self):
-        emp_name = self.employee_id.name or "Không có tên nhân viên"
-        print(f"get_employee_name: {emp_name}")
-        return emp_name
