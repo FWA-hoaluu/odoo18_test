@@ -1,0 +1,21 @@
+<odoo>
+    <data noupdate="1">
+        <record id="email_template_certificate_expiry" model="mail.template">
+            <field name="name">Gửi Thông Báo Chứng Chỉ Sắp Hết Hạn</field>
+            <field name="description">Mẫu thông báo cho chứng chỉ sắp hết hạn của nhân viên</field>
+            <field name="model_id" ref="g_hr.model_g_employee_certification"/>
+            <field name="auto_delete" eval="True"/>
+            <field name="body_html" type="html">
+                <div>
+                    <p>Xin chào <t t-esc="object.get_certification_details().get('employee_name')"/>,</p>
+                    <p>Chúng tôi xin thông báo rằng chứng chỉ <strong><t t-esc="object.get_certification_details().get('certification_name')"/></strong> của bạn sẽ hết hạn vào <strong>
+                        <t t-esc="object.get_certification_details().get('end_date') if isinstance(object.get_certification_details().get('end_date'), str) else object.get_certification_details().get('end_date').strftime('%d/%m/%Y')"/></strong>.
+                    </p>
+                    <p>Xin vui lòng xem xét và thực hiện các bước cần thiết để gia hạn chứng chỉ hoặc đăng ký thi lại để bổ sung.</p>
+                    <p>Trân trọng,</p>
+                    <p>Đội ngũ hỗ trợ</p>
+                </div>
+            </field>
+        </record>
+    </data>
+</odoo>

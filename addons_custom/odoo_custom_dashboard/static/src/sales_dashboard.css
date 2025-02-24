@@ -1,33 +1,34 @@
-/* Basic styles for the parent container */  
+/* Basic styles for the parent container *sales_dashboard/
+
 .d-flex {  
     display: flex;  
     flex-wrap: wrap; /* Ensures that items can wrap on smaller screens */  
     justify-content: center; /* Centers content horizontally */  
 }  
-  
+
 /* Styling for the card-like boxes */  
 .shadow-sm {  
     box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);  
     transition: box-shadow 0.3s; /* Adds transition for hover effect */  
 }  
-  
+
 .shadow-sm:hover {  
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Darker shadow on hover */  
-}  
-  
+}
+
 /* Ensures that each card takes full width on small screens */  
 .col-lg-3 {  
     flex: 1 0 21%; /* Allowing 4 items per row in larger screens */  
     min-width: 300px; /* Prevent cards from getting too small */  
     margin: 10px; /* Spread out the cards uniformly */  
 }  
-  
+
 /* Styling for text sizes */  
 h1, h3 {  
     margin: 0; /* Remove default margin */  
     line-height: 1.2; /* Better spacing for line height */  
 }  
-  
+
 /* Font sizes for responsiveness */  
 @media (max-width: 991.98px) {  
     .h1 {  
@@ -37,7 +38,7 @@ h1, h3 {
         font-size: 20px; /* Adjust font size for tablets */  
     }  
 }  
-  
+
 @media (max-width: 767.98px) {  
     .h1 {  
         font-size: 28px; /* Further adjust for mobile screens */  
@@ -46,8 +47,8 @@ h1, h3 {
         font-size: 18px; /* Further adjust for mobile screens */  
     }  
 }  
-  
-/* Adjust margin for smaller screens */  
+
+/* Adjust margin for smaller screens */
 @media (max-width: 575.98px) {  
     .col-lg-3 {  
         flex: 1 0 100%; /* Stack cards vertically on extra small screens */  

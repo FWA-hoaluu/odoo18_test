@@ -18,7 +18,7 @@
     'web.assets_backend': [
         'odoo_custom_dashboard/static/src/**/*.js',
         'odoo_custom_dashboard/static/src/**/*.xml',
-        'odoo_custom_dashboard/static/src/**/*.css',
+        # 'odoo_custom_dashboard/static/src/**/*.css',
         # 'odoo_custom_dashboard/static/src/sales_dashboard.js',
         # 'odoo_custom_dashboard/static/src/sales_dashboard.xml',
     ],

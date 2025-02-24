@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="hr.view_employee_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='coach_id']" position="after">
-                    <field name="certification_ids" widget="one2many_list"/>
+                    <field name="certification_ids" widget="one2many_tag" readonly="1" />
                 </xpath>
             </field>
         </record>

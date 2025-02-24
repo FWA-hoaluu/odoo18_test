@@ -1,0 +1,13 @@
+<odoo>
+    <data noupdate="1">
+        <record id="ir_cron_send_certificate_expiry_notifications" model="ir.cron">
+            <field name="name">Send Certificate Expiry Notifications</field>
+            <field name="model_id" ref="g_hr.model_g_employee_certification"/>
+            <field name="state">code</field>
+            <field name="code">model.send_certificate_expiry_notification()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="(DateTime.now() + relativedelta(days=1)).strftime('%Y-%m-%d %H:%M:%S')"/>
+        </record>
+    </data>
+</odoo>
