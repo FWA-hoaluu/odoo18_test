@@ -49,11 +49,10 @@
 										Partner:
 									</label>
 									<input type="text" id="partner_search" class="form-control" placeholder="Nhập tên partner..." t-model="state.search_partner" t-on-input="onSearchPartner" />
-									<!-- Gợi ý danh sách partner -->
-									<ul style="margin-top:70px;" class="list-group position-absolute w-100  bg-white shadow-sm" t-if="state.filtered_partners.length">
+									<!-- Gợi ý danh sách partner chỉ hiển thị khi ô tìm kiếm có dữ liệu -->
+									<ul style="margin-top:70px;" class="list-group position-absolute w-100 bg-white shadow-sm" t-if="state.search_partner.length > 0 and state.filtered_partners.length > 0">
 										<t t-foreach="state.filtered_partners" t-as="partner" t-key="partner.id">
 											<li class="list-group-item list-group-item-action cursor-pointer" t-on-click="() => onSelectPartner(partner)">
-												<!-- Gọi hàm chọn partner -->
 												<t t-esc="partner.name" />
 											</li>
 										</t>
@@ -69,93 +68,90 @@
 							</h3>
 						</div>
 					</div>
-					<!--
 					<div class="custom-dasboard">
-					<div class="d-flex justify-content-center">
-					<div class="col-lg-3 m-0 p-0">
-					<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewQuotations">
-					<div class="h1 fw-bold text-dark" style="font-size: 48px">
-					<span style="color:#dc3545;" t-esc="state.quotations?.value || 0" />
+						<div class="d-flex justify-content-center">
+							<div class="col-lg-3 m-0 p-0">
+								<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewQuotations">
+									<div class="h1 fw-bold text-dark" style="font-size: 48px">
+										<span style="color:#dc3545;" t-esc="state.quotations?.value || 0" />
+									</div>
+									<div class="h3 text-muted">
+										<span t-esc="state.quotations?.name || 'Quotations'" />
+									</div>
+									<div class="h3 mt-5">
+										<span t-attf-class="text-#{ state.quotations?.percentage > 0 ? 'success' : 'danger' }">
+											<span t-attf-class="me-1 fa fa-arrow-#{ state.quotations?.percentage > 0 ? 'up' : 'down' }" />
+											<span t-esc="state.quotations?.percentage || 0" />
+											%
+										</span>
+										<span>
+											since last period
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 m-0 p-0">
+								<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewOrders">
+									<div class="h1 fw-bold text-dark" style="font-size: 48px">
+										<span style="color:#CDB4DB;" t-esc="state.orders?.value || 0" />
+									</div>
+									<div class="h3 text-muted">
+										<span t-esc="state.orders?.name || 'Orders'" />
+									</div>
+									<div class="h3 mt-5">
+										<span t-attf-class="text-#{ state.orders?.percentage > 0 ? 'success' : 'danger' }">
+											<span t-attf-class="me-1 fa fa-arrow-#{ state.orders?.percentage > 0 ? 'up' : 'down' }" />
+											<span t-esc="state.orders?.percentage || 0" />
+											%
+										</span>
+										<span>
+											since last period
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 m-0 p-0">
+								<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewRevenues">
+									<div class="h1 fw-bold text-dark" style="font-size: 48px">
+										<span t-esc="state.orders?.revenue || 0" />
+									</div>
+									<div class="h3 text-muted">
+										<span t-esc="state.orders?.name || 'Revenues'" />
+									</div>
+									<div class="h3 mt-5">
+										<span t-attf-class="text-#{ state.orders?.revenue_percentage > 0 ? 'success' : 'danger' }">
+											<span t-attf-class="me-1 fa fa-arrow-#{ state.revenues?.percentage > 0 ? 'up' : 'down' }" />
+											<span t-esc="state.orders?.revenue_percentage || 0" />
+											%
+										</span>
+										<span>
+											since last period
+										</span>
+									</div>
+								</div>
+							</div>
+							<div class="col-lg-3 m-0 p-0">
+								<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewAverages">
+									<div class="h1 fw-bold text-dark" style="font-size: 48px">
+										<span t-esc="state.orders?.average || 0" />
+									</div>
+									<div class="h3 text-muted">
+										<span t-esc="state.averages?.name || 'Averages'" />
+									</div>
+									<div class="h3 mt-5">
+										<span t-attf-class="text-#{ state.orders?.average_percentage > 0 ? 'success' : 'danger' }">
+											<span t-attf-class="me-1 fa fa-arrow-#{ state.orders?.average_percentage > 0 ? 'up' : 'down' }" />
+											<span t-esc="state.orders?.average_percentage || 0" />
+											%
+										</span>
+										<span>
+											since last period
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
 					</div>
-					<div class="h3 text-muted">
-					<span t-esc="state.quotations?.name || 'Quotations'" />
-					</div>
-					<div class="h3 mt-5">
-					<span t-attf-class="text-#{ state.quotations?.percentage > 0 ? 'success' : 'danger' }">
-					<span t-attf-class="me-1 fa fa-arrow-#{ state.quotations?.percentage > 0 ? 'up' : 'down' }" />
-					<span t-esc="state.quotations?.percentage || 0" />
-					%
-					</span>
-					
-					<span>
-					since last period
-					</span>
-					</div>
-					</div>
-					</div>
-					<div class="col-lg-3 m-0 p-0">
-					<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewOrders">
-					<div class="h1 fw-bold text-dark" style="font-size: 48px">
-					<span style="color:#CDB4DB;" t-esc="state.orders?.value || 0" />
-					</div>
-					<div class="h3 text-muted">
-					<span t-esc="state.orders?.name || 'Orders'" />
-					</div>
-					<div class="h3 mt-5">
-					<span t-attf-class="text-#{ state.orders?.percentage > 0 ? 'success' : 'danger' }">
-					<span t-attf-class="me-1 fa fa-arrow-#{ state.orders?.percentage > 0 ? 'up' : 'down' }" />
-					<span t-esc="state.orders?.percentage || 0" />
-					%
-					</span>
-					<span>
-					since last period
-					</span>
-					</div>
-					</div>
-					</div>
-					<div class="col-lg-3 m-0 p-0">
-					<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewRevenues">
-					<div class="h1 fw-bold text-dark" style="font-size: 48px">
-					<span t-esc="state.orders?.revenue || 0" />
-					</div>
-					<div class="h3 text-muted">
-					<span t-esc="state.orders?.name || 'Revenues'" />
-					</div>
-					<div class="h3 mt-5">
-					<span t-attf-class="text-#{ state.orders?.revenue_percentage > 0 ? 'success' : 'danger' }">
-					<span t-attf-class="me-1 fa fa-arrow-#{ state.revenues?.percentage > 0 ? 'up' : 'down' }" />
-					<span t-esc="state.orders?.revenue_percentage || 0" />
-					%
-					</span>
-					<span>
-					since last period
-					</span>
-					</div>
-					</div>
-					</div>
-					<div class="col-lg-3 m-0 p-0">
-					<div class="shadow-sm border m-2 p-4 bg-white text-center cursor-pointer" t-on-click="viewAverages">
-					<div class="h1 fw-bold text-dark" style="font-size: 48px">
-					<span t-esc="state.orders?.average || 0" />
-					</div>
-					<div class="h3 text-muted">
-					<span t-esc="state.averages?.name || 'Averages'" />
-					</div>
-					<div class="h3 mt-5">
-					<span t-attf-class="text-#{ state.orders?.average_percentage > 0 ? 'success' : 'danger' }">
-					<span t-attf-class="me-1 fa fa-arrow-#{ state.orders?.average_percentage > 0 ? 'up' : 'down' }" />
-					<span t-esc="state.orders?.average_percentage || 0" />
-					%
-					</span>
-					<span>
-					since last period
-					</span>
-					</div>
-					</div>
-					</div>
-					</div>
-					</div>
-					-->
 					<div class="col mb-5 p-0">
 						<div class="shadow-sm border bg-white">
 							<div class="d-flex align-items-center justify-content-between">
